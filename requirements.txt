@@ -1,2 +1,6 @@
 'tensorflow<2'
+cython
+pillow
+jupyter
+
 
