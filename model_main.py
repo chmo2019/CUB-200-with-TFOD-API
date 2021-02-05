@@ -30,6 +30,7 @@ config.gpu_options.allow_growth = True
 session = InteractiveSession(config=config)
 
 from object_detection import model_lib
+from object_detection.utils import config_util
 
 flags.DEFINE_string(
     'model_dir', None, 'Path to output model directory '
@@ -66,6 +67,7 @@ FLAGS = flags.FLAGS
 def main(unused_argv):
   flags.mark_flag_as_required('model_dir')
   flags.mark_flag_as_required('pipeline_config_path')
+  config 
   config = tf.estimator.RunConfig(model_dir=FLAGS.model_dir)
 
   train_and_eval_dict = model_lib.create_estimator_and_inputs(
