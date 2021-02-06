@@ -1,6 +1,10 @@
 # CUB-200-with-TFOD-API
 
-sources: https://github.com/datitran/raccoon_dataset
+This repository is meant to be quick tutorial train and object detector
+on the Caltech-UCSD Birds-200-2011 dataset. In addition to going over
+the process of training an single shot detector on the dataset, the
+repository includes tools to split the text-formatted dataset which is
+different from the usual pascal-VOC-formatted dataset.
 
 # Environment Setup
 
@@ -84,3 +88,7 @@ python3 tflite_inference.py \ <br />
 https://github.com/datitran/raccoon_dataset/blob/master/LICENSE
 
 https://github.com/tensorflow/models/blob/master/LICENSE
+
+# Citations
+
+Wah C., Branson S., Welinder P., Perona P., Belongie S. “The Caltech-UCSD Birds-200-2011 Dataset.” Computation & Neural Systems Technical Report, CNS-TR-2011-001. 
