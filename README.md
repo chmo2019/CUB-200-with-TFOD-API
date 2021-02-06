@@ -23,7 +23,7 @@ protobuf-compiler
 
 mkdir model_dir && cd model_dir
 
-wget http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v2_coco_2018_03_29.tar.gz' from tensorflow 1 model zoo
+wget http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v2_coco_2018_03_29.tar.gz
 
 tar -xvf ssd_mobilenet_v2_coco_2018_03_29.tar.gz
 
