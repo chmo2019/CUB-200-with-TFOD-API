@@ -102,8 +102,6 @@ python3 tflite_inference.py \ <br />
 --tflite_model_path model_dir/export/detect.tflite \ <br />
 --video_source path/to/video_source
 
-![caption](https://archive.org/download/blue-jay-3/BlueJay3.mp4)
-
 # Licenses
 
 https://github.com/datitran/raccoon_dataset/blob/master/LICENSE
