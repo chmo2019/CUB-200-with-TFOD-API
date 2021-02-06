@@ -61,18 +61,28 @@ flags.DEFINE_integer(
     'retries upon encountering tf.errors.InvalidArgumentError. If negative, '
     'will always retry the evaluation.'
 )
+flags.DEFINE_integer(
+    'num_classes', 90, 'Number of classes. If none is provided, defaults to'
+    '90 classes'
+)
+flags.DEFINE_boolean(
+    'freeze_batchnorm', False, 'Whether or not to freeze batchnorm. If none'
+    'is provided, defaults to false'
+)
 FLAGS = flags.FLAGS
 
 
 def main(unused_argv):
   flags.mark_flag_as_required('model_dir')
   flags.mark_flag_as_required('pipeline_config_path')
-  config 
+  configs = config_util.get_configs_from_pipeline_file(FLAGS.pipeline_config_path)
+  configs['model'].ssd.freeze_batchnorm = FLAGS.freeze_batchnorm
+  configs['model'].ssd.num_classes = FLAGS.num_classes
   config = tf.estimator.RunConfig(model_dir=FLAGS.model_dir)
 
   train_and_eval_dict = model_lib.create_estimator_and_inputs(
       run_config=config,
-      pipeline_config_path=FLAGS.pipeline_config_path,
+      pipeline_config_path=configs,
       train_steps=FLAGS.num_train_steps,
       sample_1_of_n_eval_examples=FLAGS.sample_1_of_n_eval_examples,
       sample_1_of_n_eval_on_train_examples=(
