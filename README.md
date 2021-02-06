@@ -89,9 +89,21 @@ tflite_convert \
 
 # Run Inference
 
+*run inference on camera source*
+
 python3 tflite_inference.py \ <br />
 --pipeline_config_path model_dir/ssd_mobilenet_v2_coco_2018_03_29/pipeline.config \ <br />
 --tflite_model_path model_dir/export/detect.tflite
+
+*run inference on video source*
+
+python3 tflite_inference.py \ <br />
+--pipeline_config_path model_dir/ssd_mobilenet_v2_coco_2018_03_29/pipeline.config \ <br />
+--tflite_model_path model_dir/export/detect.tflite \ <br />
+--video_source path/to/video_source
+
+![caption](https://archive.org/download/blue-jay-3/BlueJay3.mp4)
+
 # Licenses
 
 https://github.com/datitran/raccoon_dataset/blob/master/LICENSE
