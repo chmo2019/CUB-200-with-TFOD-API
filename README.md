@@ -1,4 +1,6 @@
 # CUB-200-with-TFOD-API
+![alt text](http://www.vision.caltech.edu/visipedia/collage.jpg) <br />
+source: vision.caltech.edu
 
 This repository is meant to be quick tutorial train and object detector
 on the Caltech-UCSD Birds-200-2011 dataset. In addition to going over
@@ -8,9 +10,16 @@ different from the usual pascal-VOC-formatted dataset.
 
 # Environment Setup
 
+*NOTE: this was tested on Ubuntu 18.04 LTS with Python 3.6* <br />
+
+sudo apt-get install \
+libprotobuf-dev \
+libprotoc-dev \
+protobuf-compiler
+
 ./environment_setup.sh
 
-*NOTE: this tutorial used ssd mobilenet v2 but you can use a different model from the model zoo*
+*NOTE: this tutorial used ssd mobilenet v2 but you can use a different model from the model zoo* <br />
 
 mkdir model_dir && cd model_dir
 
