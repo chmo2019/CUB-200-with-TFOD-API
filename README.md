@@ -1,5 +1,5 @@
 # CUB-200-with-TFOD-API
-![alt text](http://www.vision.caltech.edu/visipedia/collage.jpg)
+![alt text](http://www.vision.caltech.edu/visipedia/collage.jpg) <br />
 source: vision.caltech.edu
 
 This repository is meant to be quick tutorial train and object detector
