@@ -7,6 +7,8 @@ import imutils
 import argparse
 
 ap = argparse.ArgumentParser()
+ap.add_argument('--video_source', default='/dev/video0',
+  help='path to video source: path to camera, path to video otherwise')
 ap.add_argument('--pipeline_config_path', required=True,
   help='path to pipeline.config')
 ap.add_argument('--tflite_model_path', required=True,
@@ -67,11 +69,11 @@ if __name__ == "__main__":
   interpreter = tf.lite.Interpreter(model_path=args.tflite_model_path)
   interpreter.allocate_tensors()
 
-  cap = cv2.VideoCapture(0)
+  cap = cv2.VideoCapture(args.video_source)
 
   while cap.isOpened():
 
-    ret, frame = cap.read() 
+    ret, frame = cap.read()
     if not ret:
       break
 
