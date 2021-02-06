@@ -41,4 +41,8 @@ cd ..
 python3 model_main.py --model_dir model_dir --pipeline_config_path model_dir/ssd_mobilenet_v2_coco_2018_03_29/pipeline.config
 
 
+# Licenses
 
+https://github.com/datitran/raccoon_dataset/blob/master/LICENSE
+
+https://github.com/tensorflow/models/blob/master/LICENSE
