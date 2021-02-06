@@ -50,11 +50,12 @@ mkdir model_dir/CUB_200_model
 
 python3 model_main.py \  <br />
 --model_dir model_dir/CUB_200_model \ <br />  
---pipeline_config_path model_dir/ssd_mobilenet_v2_coco_2018_03_29/pipeline.config
+--pipeline_config_path model_dir/ssd_mobilenet_v2_coco_2018_03_29/pipeline.config \ <br />
+--num_classes 200
 
-*NOTE: if you want to monitor training on tensorboard*
+*NOTE: if you want to monitor training on tensorboard go back to the root directory and run* <br />
 
-tensorboard --logdir 
+tensorboard --logdir model_dir/CUB_200_model/logs 
 
 # Exporting The Model
 
