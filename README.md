@@ -1,4 +1,6 @@
 # CUB-200-with-TFOD-API
+![alt text](http://www.vision.caltech.edu/visipedia/collage.jpg)
+source: vision.caltech.edu
 
 This repository is meant to be quick tutorial train and object detector
 on the Caltech-UCSD Birds-200-2011 dataset. In addition to going over
