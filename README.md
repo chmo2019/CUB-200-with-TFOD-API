@@ -30,16 +30,16 @@ tar -xvf CUB_200_2011.tgz
 
 python3 create_train_test_split.py --path=$PWD/CUB_200_2011
 
-python3 generate_tfrecord.py \ 
---csv_input_path=annotations/train.csv \ 
---output_path=annotations/train.record \ 
---image_dir=$PWD/CUB_200_2011/images \ 
+python3 generate_tfrecord.py \ <br />
+--csv_input_path=annotations/train.csv \ <br /> 
+--output_path=annotations/train.record \ <br />
+--image_dir=$PWD/CUB_200_2011/images \ <br />
 --classes=$PWD/CUB_200_2011/classes.txt
 
-python3 generate_tfrecord.py \
---csv_input_path=annotations/test.csv \
---output_path=annotations/test.record \
---image_dir=$PWD/CUB_200_2011/images \
+python3 generate_tfrecord.py \ <br />
+--csv_input_path=annotations/test.csv \ <br />
+--output_path=annotations/test.record \ <br />
+--image_dir=$PWD/CUB_200_2011/images \ <br />
 --classes=$PWD/CUB_200_2011/classes.txt
 
 cd ..
@@ -48,8 +48,8 @@ cd ..
 
 mkdir model_dir/CUB_200_model
 
-python3 model_main.py \
---model_dir model_dir/CUB_200_model \ 
+python3 model_main.py \  <br />
+--model_dir model_dir/CUB_200_model \ <br />  
 --pipeline_config_path model_dir/ssd_mobilenet_v2_coco_2018_03_29/pipeline.config
 
 *NOTE: if you want to monitor training on tensorboard*
@@ -60,23 +60,23 @@ tensorboard --logdir
 
 mkdir model_dir/exported
 
-python3 export_tflite_ssd_graph.py \ 
---pipeline_config_path $PWD/model_dir/ssd_mobilenet_v2_coco_2018_03_29/pipeline.config \
---trained_checkpoint_prefix $PWD/model_dir/CUB_200_model/model.ckpt-x \
+python3 export_tflite_ssd_graph.py \ <br />
+--pipeline_config_path $PWD/model_dir/ssd_mobilenet_v2_coco_2018_03_29/pipeline.config \ <br />
+--trained_checkpoint_prefix $PWD/model_dir/CUB_200_model/model.ckpt-x \ <br />
 --output_directory model_dir/exported
 
 tflite_convert \
---graph_def_file=$PWD/model_dir/exported/tflite_graph.pb \ 
---output_file=$PWD/model_dir/exported/detect.tflite \
---input_shapes=1,300,300,3 \
---input_arrays=normalized_input_image_tensor \
---output_arrays='TFLite_Detection_PostProcess','TFLite_Detection_PostProcess:1','TFLite_Detection_PostProcess:2','TFLite_Detection_PostProcess:3' \
+--graph_def_file=$PWD/model_dir/exported/tflite_graph.pb \ <br />
+--output_file=$PWD/model_dir/exported/detect.tflite \ <br />
+--input_shapes=1,300,300,3 \ <br />
+--input_arrays=normalized_input_image_tensor \ <br />
+--output_arrays='TFLite_Detection_PostProcess','TFLite_Detection_PostProcess:1','TFLite_Detection_PostProcess:2','TFLite_Detection_PostProcess:3' \ <br />
 --inference_type=FLOAT --allow_custom_ops 
 
 # Run Inference
 
-python3 tflite_inference.py \
---pipeline_config_path model_dir/ssd_mobilenet_v2_coco_2018_03_29/pipeline.config \
+python3 tflite_inference.py \ <br />
+--pipeline_config_path model_dir/ssd_mobilenet_v2_coco_2018_03_29/pipeline.config \ <br />
 --tflite_model_path model_dir/export/detect.tflite
 # Licenses
 
