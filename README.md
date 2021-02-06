@@ -10,7 +10,7 @@ different from the usual pascal-VOC-formatted dataset.
 
 # Environment Setup
 
-*Note: this was tested on Ubuntu 18.04 LTS with Python 3.6* <br />
+*NOTE: this was tested on Ubuntu 18.04 LTS with Python 3.6* <br />
 
 sudo apt-get install \
 libprotobuf-dev \
