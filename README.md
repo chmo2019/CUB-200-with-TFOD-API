@@ -12,9 +12,9 @@ different from the usual pascal-VOC-formatted dataset.
 
 *NOTE: this was tested on Ubuntu 18.04 LTS with Python 3.6* <br />
 
-sudo apt-get install \
-libprotobuf-dev \
-libprotoc-dev \
+sudo apt-get install \ <br />
+libprotobuf-dev \ <br />
+libprotoc-dev \ <br />
 protobuf-compiler
 
 ./environment_setup.sh
@@ -85,7 +85,8 @@ tflite_convert \
 --input_shapes=1,300,300,3 \ <br />
 --input_arrays=normalized_input_image_tensor \ <br />
 --output_arrays='TFLite_Detection_PostProcess','TFLite_Detection_PostProcess:1','TFLite_Detection_PostProcess:2','TFLite_Detection_PostProcess:3' \ <br />
---inference_type=FLOAT --allow_custom_ops 
+--inference_type=FLOAT \ <br />
+--allow_custom_ops 
 
 # Run Inference
 
