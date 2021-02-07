@@ -12,93 +12,92 @@ different from the usual pascal-VOC-formatted dataset.
 
 *NOTE: this was tested on Ubuntu 18.04 LTS with Python 3.6* <br />
 
-*install protobuf with apt*
-
+*install protobuf with apt* <br />
 sudo apt-get install \ <br />
 libprotobuf-dev \ <br />
 libprotoc-dev \ <br />
-protobuf-compiler
+protobuf-compiler <br />
 
-*run bash script to set up TFOD API*
-./environment_setup.sh
+*run bash script to set up TFOD API* <br />
+./environment_setup.sh <br />
 
 *NOTE: this tutorial used ssd mobilenet v2 but you can use a different model from the model zoo* <br />
 
-*create directory to store models*
-mkdir model_dir && cd model_dir
+*create directory to store models* <br />
+mkdir model_dir && cd model_dir <br />
 
 *get ssd mobilenet v2 from Tensorflow 1 model zoo*
 wget http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v2_coco_2018_03_29.tar.gz
 
-*untar pretrained ssd*
-tar -xvf ssd_mobilenet_v2_coco_2018_03_29.tar.gz
+*untar pretrained ssd* <br />
+tar -xvf ssd_mobilenet_v2_coco_2018_03_29.tar.gz <br />
 
-*navigate to root directory*
-cd ..
+*navigate to root directory* <br />
+cd .. <br />
 
 # Data preparation
 
-*NOTE: this tutorial is specifically for CUB 200 2011 wherein the data is provided as text files rather than xml files*
+*NOTE: this tutorial is specifically for CUB 200 2011 wherein the data is provided as text files rather than xml files* <br />
 
-*navigate to data directory*
-cd data
+*navigate to data directory* <br />
+cd data <br />
 
-*make annotations directory to store data*
-mkdir annotations
+*make annotations directory to store data* <br />
+mkdir annotations <br />
 
-*get labeled data from Caltech CUB 200 2011 page*
-wget http://www.vision.caltech.edu/visipedia-data/CUB-200-2011/CUB_200_2011.tgz
+*get labeled data from Caltech CUB 200 2011 page* <br />
+wget http://www.vision.caltech.edu/visipedia-data/CUB-200-2011/CUB_200_2011.tgz <br />
 
-*untar labeled data*
-tar -xvf CUB_200_2011.tgz
+*untar labeled data* <br />
+tar -xvf CUB_200_2011.tgz <br />
 
-*create COCO dataset csv from labeled data*
-python3 create_train_test_split.py --path=$PWD/CUB_200_2011
+*create COCO dataset csv from labeled data* <br />
+python3 create_train_test_split.py --path=$PWD/CUB_200_2011 <br />
 
-*generate train tfrecord from csv*
+*generate train tfrecord from csv* <br />
 python3 generate_tfrecord.py \ <br />
 --csv_input_path=annotations/train.csv \ <br /> 
 --output_path=annotations/train.record \ <br />
 --image_dir=$PWD/CUB_200_2011/images \ <br />
---classes=$PWD/CUB_200_2011/classes.txt
+--classes=$PWD/CUB_200_2011/classes.txt <br />
 
-*generate test tfrecord from csv*
+*generate test tfrecord from csv* <br />
 python3 generate_tfrecord.py \ <br />
 --csv_input_path=annotations/test.csv \ <br />
 --output_path=annotations/test.record \ <br />
 --image_dir=$PWD/CUB_200_2011/images \ <br />
---classes=$PWD/CUB_200_2011/classes.txt
+--classes=$PWD/CUB_200_2011/classes.txt <br />
 
-*navigate to root directory*
-cd ..
+*navigate to root directory* <br />
+cd .. <br />
 
 # Training
 
-*create directory for fine-tuned model*
-mkdir model_dir/CUB_200_model
+*create directory for fine-tuned model* <br />
+mkdir model_dir/CUB_200_model <br />
 
 *run Tensorflow training*
 python3 model_main.py \  <br />
 --model_dir model_dir/CUB_200_model \ <br />  
 --pipeline_config_path model_dir/ssd_mobilenet_v2_coco_2018_03_29/pipeline.config \ <br />
---num_classes 200
+--num_classes 200 <br />
 
 *NOTE: if you want to monitor training on tensorboard go back to the root directory and run* <br />
 
-tensorboard --logdir model_dir/CUB_200_model/logs 
+tensorboard --logdir model_dir/CUB_200_model/logs <br />
 
 # Exporting The Model
 
-*create directory for tflite model*
-mkdir model_dir/exported
+*create directory for tflite model* <br />
+mkdir model_dir/exported <br />
 
-*export fine-tuned checkpoint to frozen inference graph and prototxt*
+*export fine-tuned checkpoint to frozen inference graph and prototxt* <br />
 python3 export_tflite_ssd_graph.py \ <br />
 --pipeline_config_path $PWD/model_dir/ssd_mobilenet_v2_coco_2018_03_29/pipeline.config \ <br />
 --trained_checkpoint_prefix $PWD/model_dir/CUB_200_model/model.ckpt-x \ <br />
---output_directory model_dir/exported
+--output_directory model_dir/exported <br />
 
-*convert frozen inference graph to tflite*
+*convert frozen inference graph to tflite* <br />
 tflite_convert \
 --graph_def_file=$PWD/model_dir/exported/tflite_graph.pb \ <br />
 --output_file=$PWD/model_dir/exported/detect.tflite \ <br />
@@ -106,20 +105,20 @@ tflite_convert \
 --input_arrays=normalized_input_image_tensor \ <br />
 --output_arrays='TFLite_Detection_PostProcess','TFLite_Detection_PostProcess:1','TFLite_Detection_PostProcess:2','TFLite_Detection_PostProcess:3' \ <br />
 --inference_type=FLOAT \ <br />
---allow_custom_ops 
+--allow_custom_ops <br />
 
 # Run Inference
 
 *run inference on camera source*
 python3 tflite_inference.py \ <br />
 --pipeline_config_path model_dir/ssd_mobilenet_v2_coco_2018_03_29/pipeline.config \ <br />
---tflite_model_path model_dir/export/detect.tflite
+--tflite_model_path model_dir/export/detect.tflite <br />
 
 *run inference on video source*
 python3 tflite_inference.py \ <br />
 --pipeline_config_path model_dir/ssd_mobilenet_v2_coco_2018_03_29/pipeline.config \ <br />
 --tflite_model_path model_dir/export/detect.tflite \ <br />
---video_source path/to/video_source
+--video_source path/to/video_source <br />
 
 # Licenses
 
